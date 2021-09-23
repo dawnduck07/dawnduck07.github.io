@@ -671,25 +671,24 @@ button, img {
 
 
 /* faq */
-.tit_loadmap{
+.tit_roadmap{
   color: #fff;
   position: relative;
 }
-.tit_loadmap strong {
+.tit_roadmap strong {
   font-size: 25px;
   padding-right: 10px;
 }
-.tit_loadmap span {
+.tit_roadmap span {
   font-size: 14px;
   font-weight: 400;
 }
-.tit_loadmap:before {
+.tit_roadmap:before {
   content: "";
   display: block;
   position: absolute;
   width: 120px;
   height: 150px;
-  background: url(../images/faq_boy.png) no-repeat;
   right: 0px;
   top: 36px;
 }
