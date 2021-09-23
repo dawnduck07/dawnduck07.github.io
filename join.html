@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>join</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    .box {
+      height: 100%;
+      width: 100%;
+      background-color: gray;
+      background-position: center;
+      background-size: cover;
+      position: absolute;
+    }
+
+    .form {
+      width: 400px;
+      height: 490px;
+      position: relative;
+      margin: 6% auto;
+      background: #fff;
+      padding: 5px;
+      overflow: hidden;
+      border: 1px #000000 solid;
+      border-radius: 10px;
+    }
+
+    .button-form {
+      width: 230px;
+      margin: 40px auto;
+      position: relative;
+      border-radius: 30px;
+    }
+
+    .toggleButton {
+      padding: 10px 30px;
+      background: transparent;
+      border: 0;
+      color: black;
+      outline: none;
+      position: relative;
+    }
+
+    #button {
+      top: 0;
+      left: 0;
+      position: absolute;
+      padding-right: 2px;
+      width: 110px;
+      height: 100%;
+      background: linear-gradient(to right, #302e53, #274579, #633f85, #ef5474);
+      border-radius: 30px;
+      transition: .5s;
+    }
+
+    .icons {
+      margin: 30px auto;
+      text-align: center;
+    }
+
+    .icons img {
+      width: 40px;
+      height: 40px;
+      margin-right: 4px;
+    }
+
+    .input-group {
+      top: 180px;
+      position: absolute;
+      width: 280px;
+      transition: .5s;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px 0;
+      margin-left: 10px;
+      margin-top: 20px;
+      border: none;
+      border-bottom: 1px solid #999;
+      text-align: center;
+      background: transparent;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-bottom: 1px #e677ff solid;
+    }
+
+    .submit {
+       width: 85%;
+       height: 45px;
+       padding: 10px 30px;
+       color: white;
+       display: block;
+       margin-left: 32px;
+       background: linear-gradient(to right, #302e53, #274579, #633f85, #ef5474);
+       border: 0;
+       outline: none;
+       border-radius: 30px;
+       border: 1px black solid;
+    }
+
+    .checkbox {
+      margin: 30px 10px 30px 0;
+    }
+
+    span {
+      color: #777;
+      font-size: 11px;
+      bottom: 68px;
+      position: absolute;
+    }
+
+    #login {
+      left: 50px;
+    }
+
+    #register {
+      left: 450px;
+    }
+  
+    div.box {
+      background: url(./images/menu_bg.png);
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="form">
+      <div class="button-form">
+        <div id="button"></div>
+        <button class="toggleButton" onclick="toggleLogin()"><strong>LOGIN</strong></button>
+        <button class="toggleButton" onclick="toggleRegister()"><strong>Register</strong></button>
+      </div>
+      <div class="icons">
+        <a href="#"><img src="./images/sns-1.png" alt="facebook"></a>
+        <a href="#"><img src="./images/sns-2.png" alt="twitter"></a>
+        <a href="#"><img src="./images/sns-3.png" alt="google"></a>
+      </div>
+      <form id="login"class="input-group">
+        <input type="text" class="input-field" placeholder="Your Email">
+        <input type="password" class="input-field" placeholder="Your Password">
+        <input type="checkbox" class="checkbox"><span>Remember Password</span>
+        <button class="submit"><strong>LOGIN</strong></button>
+      </form>
+      <form id="register" name="registerFrm" action="javascript:saveGuestbook();" class="input-group">
+        <input type="text" class="input-field" placeholder="Your Name" id="name">
+        <input type="text" class="input-field" placeholder="Your Email" id="email">
+        <input type="password" class="input-field" placeholder="Your Password" id="psw">
+        <input type="checkbox" class="checkbox"><span>Remember Conditions</span>
+        <button id="btn1" onclick="registerAction();"class="submit"><strong>RESISTER</strong></button>
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript">
+// 666666d
+  var x = document.getElementById("login");
+  var y = document.getElementById("register")
+  var z = document.getElementById("button");
+
+  function toggleLogin() {
+    x.style.left = "50px";
+    y.style.left = "450px";
+    z.style.left = "0";
+  }
+
+  function toggleRegister() {
+    x.style.left = "-400px";
+    y.style.left = "50px";
+    z.style.left = "110px";
+  }
+
+  // webstorage.html에서 퍼옴
+
+  const name = $("#name").val();
+  const email = $("#email").val();
+  const psw = $("#psw").val();
+  
+  
+  function GuestRegisterEntry(email, psw){
+    this.email = email;
+    this.psw = psw;
+    this.datetime = Date.now(); // 유닉스타임 저장
+  }
+  
+  function saveGuestbook(){
+    const entry = new GuestRegisterEntry(email.value, psw.value);
+    const entries = JSON.parse(localStorage.getItem(name)) || [];
+    entries.push(entry);
+
+    localStorage.setItem(name, JSON.stringify(entries));
+
+    document.registerFrm.reset();
+
+  }
+
+  function registerAction (){
+
+    
+    if($(name).val() == '' || $(email).val() == '' || $(psw).val() =='')
+      return;
+
+      // 2. 저장
+    // localStorage[$key.val()] = $value.val();
+    localStorage.setItem('$(name).val()', $(email).val(), $(psw).val());
+
+    // 3. 초기화
+    /*name.val('');
+    email.val('');
+    psw.val('');*/
+
+
+  }
+
+  $(document.registerFrm).submit(e => {
+    if($(name).val() == '' || $(email).val() == '' || $(psw).val() == ''){
+      alert("이름과 내용을 작성해주세요.");
+      e.preventDefault();
+    }
+  });
+
+
+
+  /*
+  $("#btn1").click(e => {
+    // 1. 유효성검사
+    if(name.val() == '' || email.val() == '' || pswd.val() =='')
+      return;
+    // 2. 저장
+    // localStorage[$key.val()] = $value.val();
+    localStorage.setItem(name.val(), eamil.val(), pswd.val());
+    // 3. 초기화
+    $key.val('');
+    $value.val('');
+  });
+  
+  */
+
+  </script>
+</body>
+</html>
